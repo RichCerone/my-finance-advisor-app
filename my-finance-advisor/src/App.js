@@ -1,14 +1,18 @@
-import NavBar from './components/common/NavBar';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import LoginBox from './components/login/LoginBox';
 import Footer from './components/common/Footer';
 
 function App() {
   return (
     <div>
-      <NavBar appName="My Finance Advisor"/>
-      <LoginBox/>
-      <Footer content="Developed By: Rich Cerone" />
+      <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginBox />} />
+          </Routes>  
+      </BrowserRouter>
+      <Footer content="Developed By: Rich Cerone" />    
     </div>
+    
   );
 }
 

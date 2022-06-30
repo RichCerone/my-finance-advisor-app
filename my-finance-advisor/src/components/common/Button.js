@@ -7,7 +7,6 @@ import React from 'react';
  * @returns JSX component.
  */
 function Button(props) {
-    
     const {
         
         id = "",
@@ -18,19 +17,30 @@ function Button(props) {
 
         iconClassName,
 
+        isDisabled = false,
+
         onClickAction = () => { return; },
 
-        value = ""
+        value = "",
+
+        notLoading = true
     } = props;
 
     if (iconClassName === undefined) {
+
         return(
-            <button id={id} type={type} className={className} onClick={() => onClickAction}>{value}</button>
+            <button id={id} type={type} className={className} onClick={() => onClickAction()} disabled={isDisabled} >
+                <span hidden={notLoading} className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {value}
+            </button>
         );
     }
     else {
         return(
-            <button id={id} type={type} className={className} onClick={() => onClickAction}><em className={iconClassName}></em> {value}</button>
+            <button id={id} type={type} className={className} onClick={() => onClickAction()} disabled={isDisabled}>
+                <span hidden={notLoading} className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <em hidden={notLoading === false} className={iconClassName}></em> {value}
+            </button>
         );
     }
 }

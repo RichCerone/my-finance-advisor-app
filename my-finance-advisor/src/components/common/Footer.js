@@ -9,12 +9,15 @@ import React from 'react';
 function Footer(props) {
 
     const {
+        /**
+         * Content to show in the footer.
+         */
         content
     } = props;
 
     return(
-        <nav class="navbar fixed-bottom bg-light">
-            <div class="container-fluid">
+        <nav className="navbar fixed-bottom bg-light">
+            <div className="container-fluid">
                 {content}
             </div>
       </nav>

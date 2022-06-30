@@ -52,7 +52,7 @@ function InputGroup(props) {
         /**
          * Validation to perform on key up on the input.
          */
-        onKeyUpValidation = () => { return; }
+        onKeyUpValidation = () => { return; },
     } = props;
 
 
