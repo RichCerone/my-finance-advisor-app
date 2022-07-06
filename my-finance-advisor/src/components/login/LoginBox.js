@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import NavBar from '../common/NavBar';
-import InputGroup from '../common/InputGroup';
-import Label from '../common/Label';
-import Button from '../common/Button';
-import Message from '../common/Message';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from "react";
+import NavBar from "../common/NavBar";
+import InputGroup from "../common/InputGroup";
+import Label from "../common/Label";
+import Button from "../common/Button";
+import Message from "../common/Message";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Creates a login box.
