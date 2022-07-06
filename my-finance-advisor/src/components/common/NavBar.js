@@ -1,25 +1,31 @@
-import React, {Component} from 'react';
+import React from "react";
 
 /**
- * Display's the application's navbar.
+ * Creates a generic nav bar.
+ * 
+ * @param {*} props Data properties for configuring the component.
+ * @returns JSX component.
  */
-class NavBar extends Component {
-    render() {
-        const {
-            /**
-             * The name of the application to display in the navbar title.
-             */
-            appName
-        } = this.props
+function NavBar(props) {
+    const {
+        /**
+         * The name of the application to display in the navbar title.
+         */
+        appName,
 
-        return(
-            <nav className="navbar bg-dark">
-                <div className="container-fluid">
-                    <span className="navbar-brand mb-0 h1 text-white"><i className="bi bi-coin"></i> {appName}</span>
-                </div>
-            </nav>
-        );
-    }
+        /**
+         * The icon to display in the nav.
+         */
+        appIcon,
+    } = props
+
+    return(
+        <nav className="navbar bg-dark">
+            <div className="container-fluid">
+                <span className="navbar-brand mb-0 h1 text-white"><em title={appName} className={appIcon}></em> {appName}</span>
+            </div>
+        </nav>
+    );
 }
 
 export default NavBar;
