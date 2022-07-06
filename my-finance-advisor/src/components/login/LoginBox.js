@@ -3,6 +3,8 @@ import NavBar from '../common/NavBar';
 import InputGroup from '../common/InputGroup';
 import Label from '../common/Label';
 import Button from '../common/Button';
+import Message from '../common/Message';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Creates a login box.
@@ -11,6 +13,9 @@ import Button from '../common/Button';
  */
 function LoginBox() {
     
+    // We will use navigation to load the next view once the login is successful.
+    const navigate = useNavigate();
+
     // Define hooks.
     const [passwordState, setPasswordState] = useState({
         iconClassName: "bi bi-eye-slash-fill",
@@ -26,6 +31,19 @@ function LoginBox() {
         notLoading: true
     });
 
+    const [messageState, setMessageState] = useState({
+        iconClassName: "",
+        message: "",
+        messageType: "info",
+        dismissible: false,
+        isHidden: true,
+    });
+
+    /**
+     * Sets the login buttons loading state.
+     * 
+     * @param {boolean} init true to init the loading state, else false.
+     */
     const initLoading = (init) => {
         if (init) {
             setLoginState({disabled: true, notLoading: false});
@@ -46,16 +64,16 @@ function LoginBox() {
                     iconClassName: "bi bi-eye-slash-fill",
                     placeholder: "No peaking",
                     type: "password",
-                    className: "form-control"
+                    className: passwordState.className
                 });
             }
             else
             {
                 setPasswordState({
                     iconClassName: "bi bi-eye-fill",
-                    placeholder: "No peaking",
-                    type: "password",
-                    className: "form-control"
+                    placeholder: "You peaked...-_-",
+                    type: "text",
+                    className: passwordState.className
                 });
             }
         }
@@ -73,11 +91,16 @@ function LoginBox() {
             const username = document.getElementById("username").value;
 
             if (username === undefined || username === null || username.length < 1)
-            {
-                console.log("Username is invalid.");
-                
+            {   
                 setUserInputClassName("form-control is-invalid");
                 setLoginState({disabled: true, notLoading: true});
+                setMessageState({
+                    iconClassName: "bi bi-exclamation-circle-fill",
+                    message: "The username is invalid.",
+                    messageType: "error",
+                    dismissible: messageState.dismissible,
+                    isHidden: false
+                });
 
                 return false;
             }
@@ -85,6 +108,13 @@ function LoginBox() {
             {
                 setUserInputClassName("form-control is-valid");
                 setLoginState({disabled: false, notLoading: true});
+                setMessageState({
+                    iconClassName: messageState.iconClassName,
+                    message: "",
+                    messageType: messageState.messageType,
+                    dismissible: messageState.dismissible,
+                    isHidden: true
+                });
 
                 return true;
             }
@@ -103,27 +133,38 @@ function LoginBox() {
 
             if (password === undefined || password === null || password.length < 1)
             {
-                console.log("Password is invalid.");
                 
                 setPasswordState({
                     iconClassName: passwordState.iconClassName,
-                    placeholder: "No peaking",
-                    type: "password",
+                    placeholder: passwordState.placeholder,
+                    type: passwordState.type,
                     className: "form-control is-invalid"
                 });
-
                 setLoginState({disabled: true, notLoading: true});
+                setMessageState({
+                    iconClassName: "bi bi-exclamation-circle-fill",
+                    message: "The password is invalid.",
+                    messageType: "error",
+                    dismissible: messageState.dismissible,
+                    isHidden: false
+                });
             }
             else
             {
                 setPasswordState({
                     iconClassName: passwordState.iconClassName,
-                    placeholder: "No peaking",
-                    type: "password",
+                    placeholder: passwordState.placeholder,
+                    type: passwordState.type,
                     className: "form-control is-valid"
                 });
-
                 setLoginState({disabled: false, notLoading: true});
+                setMessageState({
+                    iconClassName: messageState.iconClassName,
+                    message: "",
+                    messageType: messageState.messageType,
+                    dismissible: messageState.dismissible,
+                    isHidden: true
+                });
             }
         }
         catch (e) {
@@ -152,6 +193,7 @@ function LoginBox() {
             sessionStorage.setItem("token", token);
 
             initLoading(false);
+            navigate("/accounts");
         }
         catch (e) {
             console.error(e);
@@ -167,6 +209,16 @@ function LoginBox() {
                         <div className="card-body">
                             <div className="d-flex justify-content-center">
                                 <h3>Login</h3>
+                            </div>
+
+                            <div className="mb-3">
+                                <Message 
+                                id="loginMessage"
+                                iconClassName={messageState.iconClassName}
+                                message={messageState.message}
+                                messageType={messageState.messageType}
+                                dismissible={messageState.dismissible}
+                                isHidden={messageState.isHidden}/>
                             </div>
 
                             <div className="mb-3">
