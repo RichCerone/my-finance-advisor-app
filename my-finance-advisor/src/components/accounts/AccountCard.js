@@ -2,8 +2,13 @@ import {useState} from "react";
 import Label from "../common/Label";
 import Button from "../common/Button";
 import Input from "../common/Input";
-import Select from "../common/Select";
 
+/**
+ * Creates an account information card.
+ * 
+ * @param {*} props Data properties for configuring the component.
+ * @returns JSX component.
+ */
 function AccountCard(props) {
     const options = new Map([
         ["Savings","Savings"],

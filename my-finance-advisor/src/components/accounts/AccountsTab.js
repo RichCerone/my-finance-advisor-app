@@ -2,6 +2,8 @@ import React from 'react';
 import AccountCard from './AccountCard';
 
 /**
+ * Creates an account tab.
+ * 
  * This shows and allows management of all
  * user accounts.
  * 
