@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 /**
  * Creates a generic input component.
@@ -29,6 +29,11 @@ function Input(props) {
             className,
             
             /**
+             * Any preset value to put into the input.
+             */
+            value = "",
+
+            /**
              * Validation to perform on blur of the input.
              */
             onBlurValidation = () => { return; },
@@ -39,7 +44,9 @@ function Input(props) {
             onKeyUpValidation = () => { return; }
     } = props;
 
-    return <input id={id} type={type} placeholder={placeholder} className={className} aria-label={id} aria-describedby={id} onBlur={() => onBlurValidation()} onKeyUp={() => onKeyUpValidation()} />;
+    const [inputValue, setInputValue] = useState(value);
+
+    return <input id={id} type={type} placeholder={placeholder} value={inputValue} className={className} aria-label={id} aria-describedby={id} onBlur={() => onBlurValidation()} onKeyUp={() => onKeyUpValidation()} onChange={e => setInputValue(e.target.value)} />;
 }
 
 export default Input;

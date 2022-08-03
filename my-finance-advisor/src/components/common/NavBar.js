@@ -20,7 +20,7 @@ function NavBar(props) {
     } = props
 
     return(
-        <nav className="navbar bg-dark">
+        <nav className="navbar bg-dark mb-3">
             <div className="container-fluid">
                 <span className="navbar-brand mb-0 h1 text-white"><em title={appName} className={appIcon}></em> {appName}</span>
             </div>

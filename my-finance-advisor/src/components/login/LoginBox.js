@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import NavBar from "../common/NavBar";
 import InputGroup from "../common/InputGroup";
 import Label from "../common/Label";
 import Button from "../common/Button";
@@ -193,7 +192,7 @@ function LoginBox() {
             sessionStorage.setItem("token", token);
 
             initLoading(false);
-            navigate("/accounts");
+            navigate("/menu");
         }
         catch (e) {
             console.error(e);
@@ -202,7 +201,6 @@ function LoginBox() {
 
     return(
         <div>
-            <NavBar appName="My Finance Advisor" appIcon="bi bi-coin"/>
             <div className="container-fluid mt-5">
                 <div className="d-flex justify-content-center">
                     <div className="card">
