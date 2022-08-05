@@ -187,12 +187,34 @@ function LoginBox() {
             }
 
             initLoading(true);
-
-            const token = await window.electronApi.send("api:getToken", {username: username, password: password});
-            sessionStorage.setItem("token", token);
+            
+            // Call electron main process to get token.
+            const response = await window.electronApi.send("api:getToken", {username: username, password: password});
+            if (response.isError === false) {
+                sessionStorage.setItem("username", username);
+                
+                navigate("/menu");
+            }
+            else if (response.data === 404) {
+                setMessageState({
+                    iconClassName: "bi bi-exclamation-circle-fill",
+                    message: "The username or password is incorrect.",
+                    messageType: "warning",
+                    dismissible: messageState.dismissible,
+                    isHidden: false
+                });
+            }
+            else {
+                setMessageState({
+                    iconClassName: "bi bi-exclamation-circle-fill",
+                    message: "An unexpected error occurred.",
+                    messageType: "error",
+                    dismissible: messageState.dismissible,
+                    isHidden: false
+                });
+            }
 
             initLoading(false);
-            navigate("/menu");
         }
         catch (e) {
             console.error(e);
@@ -220,7 +242,7 @@ function LoginBox() {
                             </div>
 
                             <div className="mb-3">
-                                <Label forEl="username" value="Username" className="form-label"/>
+                                <Label forEl="username" value="Username" className="form-label fw-bold"/>
                                 <InputGroup 
                                 iconClass="bi bi-person-fill"
                                 inputId="username"
@@ -231,7 +253,7 @@ function LoginBox() {
                             </div>
 
                             <div className="mb-3">
-                                <Label forEl="password" value="Password" className="form-label"/>
+                                <Label forEl="password" value="Password" className="form-label fw-bold"/>
                                 <InputGroup 
                                 iconId="passwordIcon" 
                                 iconAction={() => showOrHidePassword()} 
