@@ -16,11 +16,11 @@ function Footer(props) {
     } = props;
 
     return(
-        <nav className="navbar fixed-bottom bg-light">
+        <nav className="navbar fixed-bottom bg-light mt-3">
             <div className="container-fluid">
                 {content}
             </div>
-      </nav>
+        </nav>
     );
 }
 
