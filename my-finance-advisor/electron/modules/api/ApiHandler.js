@@ -47,19 +47,19 @@ async function GetAccountsByUser(user) {
 
     try {
         await axios.get(`${process.env.GET_ACCOUNTS_URI}?account_owner_id=${user}`, {headers: {"Authorization": `Bearer ${token}`}})
-    .then(response => {
-        if (response.status === 200) {
-            result = new Result(response.data, false, "");
-        }
-    })
-    .catch(error => {
-        if (error.response.status === 404) {
-            result = new Result(404, true, `Could not find any accounts by user '${user}'`);
-        }
-        else {
-            result = new Result(error.response.status, true, error.message);
-        }
-    });
+        .then(response => {
+            if (response.status === 200) {
+                result = new Result(response.data, false, "");
+            }
+        })
+        .catch(error => {
+            if (error.response.status === 404) {
+                result = new Result(404, true, `Could not find any accounts by user '${user}'`);
+            }
+            else {
+                result = new Result(error.response.status, true, error.message);
+            }
+        });
     }
     catch (e) {
         console.error(e);
@@ -67,6 +67,19 @@ async function GetAccountsByUser(user) {
     }
 
     return result;
+}
+
+
+async function SaveAccount(account) {
+    let result;
+    const token = process.env.TOKEN;
+
+    try {
+        
+    }
+    catch (e) {
+
+    }
 }
 
 module.exports.GetToken = GetToken;

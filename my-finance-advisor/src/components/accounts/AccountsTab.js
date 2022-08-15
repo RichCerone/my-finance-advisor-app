@@ -19,7 +19,6 @@ function AccountsTab() {
 
     useEffect(() => {
         async function getAccounts() {
-            console.log(sessionStorage.getItem("username"));
             const accounts = [];
             const response = await window.electronApi.send("api:getAccountsByUser", sessionStorage.getItem("username"));
             console.log(response);
