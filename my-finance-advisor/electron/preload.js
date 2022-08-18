@@ -3,7 +3,8 @@ const { contextBridge, ipcRenderer } = require('electron')
 // These are registered channels that are allow to talk to main process.
 const sendChannels = [
   'api:getToken',
-  'api:getAccountsByUser'
+  'api:getAccountsByUser',
+  'api:updateAccount'
 ];
 
 // Exposes electron API to client.

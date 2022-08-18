@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 
 /**
  * Creates a generic input component.
@@ -41,12 +40,15 @@ function Input(props) {
             /**
              * Validation to perform on key up on the input.
              */
-            onKeyUpValidation = () => { return; }
+            onKeyUpValidation = () => { return; },
+
+            /**
+             * Handles updating the value of the input element.
+             */
+            onChangeAction = (value) => { return value; }
     } = props;
 
-    const [inputValue, setInputValue] = useState(value);
-
-    return <input id={id} type={type} placeholder={placeholder} value={inputValue} className={className} aria-label={id} aria-describedby={id} onBlur={() => onBlurValidation()} onKeyUp={() => onKeyUpValidation()} onChange={e => setInputValue(e.target.value)} />;
+    return <input id={id} type={type} placeholder={placeholder} value={value} className={className} aria-label={id} aria-describedby={id} onBlur={() => onBlurValidation()} onKeyUp={() => onKeyUpValidation()} onChange={e => onChangeAction(e.target.value)} />;
 }
 
 export default Input;
