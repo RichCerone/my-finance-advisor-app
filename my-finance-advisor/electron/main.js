@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const { GetToken, GetAccountsByUser } = require("./modules/api/ApiHandler");
+const { GetToken, GetAccountsByUser, UpdateAccount } = require("./modules/api/ApiHandler");
 const { app, BrowserWindow, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');   
 const path = require('path');
@@ -64,6 +64,15 @@ ipcMain.handle('api:getToken', async function (_, arg) {
  */
 ipcMain.handle('api:getAccountsByUser', async function(_, arg) {
   const result = await GetAccountsByUser(arg);
+
+  return result;
+});
+
+/**
+ * Updates the account.
+ */
+ipcMain.handle('api:updateAccount', async function(_, arg) {
+  const result = await UpdateAccount(arg);
 
   return result;
 });

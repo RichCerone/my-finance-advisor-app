@@ -1,9 +1,0 @@
-{
-  "devDependencies": {
-    "react-router-dom": "^6.3.0"
-  },
-  "dependencies": {
-    "bootstrap": "^5.2.0",
-    "bootstrap-icons": "^1.9.1"
-  }
-}

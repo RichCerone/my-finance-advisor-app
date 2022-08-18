@@ -143,7 +143,7 @@ function LoginBox() {
                 setMessageState({
                     iconClassName: "bi bi-exclamation-circle-fill",
                     message: "The password is invalid.",
-                    messageType: "error",
+                    messageType: "warning",
                     dismissible: messageState.dismissible,
                     isHidden: false
                 });

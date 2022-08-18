@@ -21,7 +21,7 @@ function AccountsTab() {
         async function getAccounts() {
             const accounts = [];
             const response = await window.electronApi.send("api:getAccountsByUser", sessionStorage.getItem("username"));
-            console.log(response);
+
             if (response.data === 404) {
                 setMessageType("info");
             }

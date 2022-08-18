@@ -46,7 +46,7 @@ async function GetAccountsByUser(user) {
     const token = process.env.TOKEN;
 
     try {
-        await axios.get(`${process.env.GET_ACCOUNTS_URI}?account_owner_id=${user}`, {headers: {"Authorization": `Bearer ${token}`}})
+        await axios.get(`${process.env.ACCOUNTS_URI}?account_owner_id=${user}`, {headers: {"Authorization": `Bearer ${token}`}})
         .then(response => {
             if (response.status === 200) {
                 result = new Result(response.data, false, "");
@@ -69,18 +69,41 @@ async function GetAccountsByUser(user) {
     return result;
 }
 
-
-async function SaveAccount(account) {
+/**
+ * Updates the account.
+ * 
+ * @param {*} account The account object to update.
+ * @returns Result from API call.
+ */
+async function UpdateAccount(account) {
     let result;
     const token = process.env.TOKEN;
 
     try {
-        
+        await axios.put(process.env.ACCOUNTS_URI, account, {headers: {"Authorization": `Bearer ${token}`}})
+        .then(response => {
+            if (response.status === 200) {
+                result = new Result(response.data, false, "");
+            }
+        })
+        .catch(error => {
+            if (error.response.status === 400) {
+                result = new Result(error.response.data, true, "At least one field was invalid updating the account.");
+            }
+            else {
+                result = new Result(error.response.status, true, error.message);
+            }
+        });
     }
     catch (e) {
-
+        console.log("here catch");
+        console.error(e);
+        result = new Result("", true, e.message);
     }
+
+    return result;
 }
 
 module.exports.GetToken = GetToken;
 module.exports.GetAccountsByUser = GetAccountsByUser;
+module.exports.UpdateAccount = UpdateAccount;
