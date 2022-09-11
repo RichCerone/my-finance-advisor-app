@@ -9,13 +9,12 @@ const {Result} = require("../models/Result");
  */
 async function GetToken(user) {
     let result;
-    const token = process.env.TOKEN;
     
     try {
         await axios.post(process.env.GET_TOKEN_URI, user)
         .then(response => {
             if (response.status === 201) {
-                result =  new Result(token, false, "");
+                result =  new Result(process.env.TOKEN, false, "");
             }
         })
         .catch(error => {
@@ -43,10 +42,9 @@ async function GetToken(user) {
  */
 async function GetAccountsByUser(user) {
     let result;
-    const token = process.env.TOKEN;
 
     try {
-        await axios.get(`${process.env.ACCOUNTS_URI}?account_owner_id=${user}`, {headers: {"Authorization": `Bearer ${token}`}})
+        await axios.get(`${process.env.ACCOUNTS_URI}?account_owner_id=${user}`, {headers: {"Authorization": `Bearer ${process.env.TOKEN}`}})
         .then(response => {
             if (response.status === 200) {
                 result = new Result(response.data, false, "");
@@ -77,10 +75,9 @@ async function GetAccountsByUser(user) {
  */
 async function UpdateAccount(account) {
     let result;
-    const token = process.env.TOKEN;
 
     try {
-        await axios.put(process.env.ACCOUNTS_URI, account, {headers: {"Authorization": `Bearer ${token}`}})
+        await axios.put(process.env.ACCOUNTS_URI, account, {headers: {"Authorization": `Bearer ${process.env.TOKEN}`}})
         .then(response => {
             if (response.status === 200) {
                 result = new Result(response.data, false, "");
