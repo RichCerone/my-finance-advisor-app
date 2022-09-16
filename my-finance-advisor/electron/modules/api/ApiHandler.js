@@ -93,7 +93,34 @@ async function UpdateAccount(account) {
         });
     }
     catch (e) {
-        console.log("here catch");
+        console.error(e);
+        result = new Result("", true, e.message);
+    }
+
+    return result;
+}
+
+
+async function CreateAccount(account) {
+    let result;
+
+    try {
+        await axios.post(process.env.ACCOUNTS_URI, account, {headers: {"Authorization": `Bearer ${process.env.TOKEN}`}})
+        .then(response => {
+            if (response.status === 201) {
+                result = new Result(response.data, false, "");
+            }
+        })
+        .catch(error => {
+            if (error.response.status === 400) {
+                result = new Result(error.response.data, true, "At least one field was invalid updating the account.");
+            }
+            else {
+                result = new Result(error.response.status, true, error.message);
+            }
+        });
+    }
+    catch (e) {
         console.error(e);
         result = new Result("", true, e.message);
     }
@@ -104,3 +131,4 @@ async function UpdateAccount(account) {
 module.exports.GetToken = GetToken;
 module.exports.GetAccountsByUser = GetAccountsByUser;
 module.exports.UpdateAccount = UpdateAccount;
+module.exports.CreateAccount = CreateAccount;

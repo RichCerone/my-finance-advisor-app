@@ -4,7 +4,8 @@ const { contextBridge, ipcRenderer } = require('electron')
 const sendChannels = [
   'api:getToken',
   'api:getAccountsByUser',
-  'api:updateAccount'
+  'api:updateAccount',
+  "api:createAccount"
 ];
 
 // Exposes electron API to client.

@@ -41,7 +41,11 @@ function SelectGroup(props) {
         /**
          * Default select option text.
          */
-        defaultPlaceholder = "Select..."
+        defaultPlaceholder = "Select...",
+
+        onChangeAction = (val) => { return; },
+
+        onBlurAction = () => { return; }
 
     } = props;
 
@@ -55,7 +59,7 @@ function SelectGroup(props) {
     return (
         <div className="input-group mb-3">
             <span className="input-group-text"><em id={iconId} className={iconClass} onClick={() => iconAction()}></em></span>
-            <select id={id} defaultValue={defaultPlaceholder} className="form-select" aria-label={ariaLabel}>
+            <select id={id} defaultValue={defaultPlaceholder} className="form-select" aria-label={ariaLabel} onBlur={onBlurAction()} onChange={e => onChangeAction(e.target.value)}>
                 <option value={defaultPlaceholder}>{defaultPlaceholder}</option>
                 {optionsJsx}
             </select>

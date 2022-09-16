@@ -83,7 +83,7 @@ function Button(props) {
         }
         else if (showsModal) { // Render button that shows a modal.
            return(
-            <button id={id} type={type} data-bs-toggle="modal" data-bs-target={modalTarget} className={className} disabled={isDisabled} >
+            <button id={id} type={type} data-bs-toggle="modal" data-bs-target={modalTarget} className={className} onClick={() => onClickAction()} disabled={isDisabled} >
                 <span hidden={notLoading} className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 {value}
             </button>
@@ -91,7 +91,7 @@ function Button(props) {
         }
         else if (closesModal) { // Render button that closes a modal.
            return(
-            <button id={id} type={type} data-bs-dismiss="modal" data-bs-target={modalTarget} className={className} disabled={isDisabled} >
+            <button id={id} type={type} data-bs-dismiss="modal" data-bs-target={modalTarget} className={className} onClick={() => onClickAction()} disabled={isDisabled} >
                 <span hidden={notLoading} className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 {value}
             </button>
@@ -109,7 +109,7 @@ function Button(props) {
         }
         else if (showsModal) { // Render a button with icon that shows a modal.
             return(
-                <button id={id} type={type} data-bs-toggle="modal" data-bs-target={modalTarget} className={className} disabled={isDisabled}>
+                <button id={id} type={type} data-bs-toggle="modal" data-bs-target={modalTarget} className={className} onClick={() => onClickAction()} disabled={isDisabled}>
                     <span hidden={notLoading} className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     <em hidden={notLoading === false} className={iconClassName}></em> {value}
                 </button>
@@ -117,7 +117,7 @@ function Button(props) {
         }
         else if (closesModal) { // Render a button with icon that closes a modal.
             return (
-                <button id={id} type={type} data-bs-dismiss="modal" className={className} disabled={isDisabled}>
+                <button id={id} type={type} data-bs-dismiss="modal" className={className} onClick={() => onClickAction()} disabled={isDisabled}>
                     <span hidden={notLoading} className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     <em hidden={notLoading === false} className={iconClassName}></em> {value}
                 </button>

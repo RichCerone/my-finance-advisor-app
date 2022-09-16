@@ -16,11 +16,13 @@ import SelectGroup from "../common/SelectGroup";
  * @returns JSX component.
  */
 function AccountsTab() {
+    // Defines the different types of accounts that can be opened.
     const accountTypes = new Map([
         ["Savings","Savings"],
         ["Checking", "Checking"],
         ["Brokerage", "Brokerage"]
     ]);
+    const accountTypeDefaultValue = "Select the Type of Account"
 
     /**
      * Define hooks.
@@ -37,7 +39,7 @@ function AccountsTab() {
     const [newAccountType, setNewAccountType] = useState("");
     const [newAccountInstitution, setNewAccountInstitution] = useState("");
     const [newBalance, setNewBalance] = useState("");
-    const [saveButtonState, setSaveButtonState] = useState({
+    const [createButtonState, setCreateButtonState] = useState({
         notLoading: true,
         isDisabled: true
     });
@@ -84,6 +86,69 @@ function AccountsTab() {
 
         getAccounts();
     }, [accountsLength]);
+
+    useEffect(() => {
+        setNewAccountId(newAccountId);
+        setNewAccountName(newAccountName);
+        setNewAccountType(newAccountType);
+        setNewAccountInstitution(newAccountInstitution);
+        setNewBalance(newBalance);
+        setNewAccountData({
+            account_id: newAccountId,
+            account_name: newAccountName,
+            account_type: newAccountType,
+            account_institution: newAccountInstitution,
+            balance: newBalance
+        });
+
+        if (newAccountData.account_id === "" || newAccountData.account_name === "" || newAccountData.account_type === accountTypeDefaultValue
+            || newAccountData.account_institution === "" || newBalance === "")
+        {
+            setCreateButtonState({
+                notLoading: true,
+                isDisabled: true  
+            });
+        }
+        else
+        {
+            setCreateButtonState({
+                notLoading: true,
+                isDisabled: false  
+                });
+        }
+    }, [newAccountId, newAccountName, newAccountType, newAccountInstitution, newBalance, 
+        newAccountData.account_id, newAccountData.account_name, newAccountData.account_type, 
+        newAccountData.account_institution, newAccountData.balance]);
+
+    const createAccount = async () => {
+        setCreateButtonState({
+            notLoading: false,
+            isDisabled: true
+        });
+
+        // Reset message state.
+        setMessageState({
+            message: "",
+            hidden: true,
+            type: "info"
+        })
+
+        const response = await window.electronApi.send("api:createAccount", newAccountData);
+
+        setCreateButtonState({
+            notLoading: true,
+            isDisabled: false
+        });
+
+        if (response.isError) {
+            console.error(response);
+            setMessageState({
+                message: response.error,
+                hidden: false,
+                type: "error"
+            })
+        }
+    }
 
     if (isLoading) {
         return (
@@ -139,7 +204,7 @@ function AccountsTab() {
                     <div>
                         <Button id="cancel" className="btn btn-outline-secondary" iconClassName="bi bi-x" closesModal={true} value="Cancel" />
                         &nbsp;
-                        <Button type="button" className="btn btn-outline-success" iconClassName="bi bi-plus" value="Create" isDisabled={saveButtonState.isDisabled} notLoading={saveButtonState.notLoading} />
+                        <Button type="button" className="btn btn-outline-success" iconClassName="bi bi-plus" value="Create" isDisabled={createButtonState.isDisabled} notLoading={createButtonState.notLoading} />
                     </div>
             
                 } />
@@ -178,7 +243,7 @@ function AccountsTab() {
                     </div>
                     <div className="mb-3">
                         <Label forEl="accountType" className="form-label fw-bold" value="Account Type:" />
-                        <SelectGroup inputId="accountType" defaultPlaceholder="Select the Type of Account" options={accountTypes} className="form-control" iconClass="bi bi-tag-fill" value={newAccountType} onChangeAction={val => setNewAccountType(val)} />
+                        <SelectGroup inputId="accountType" defaultPlaceholder={accountTypeDefaultValue} options={accountTypes} className="form-control" iconClass="bi bi-tag-fill" value={newAccountType} onChangeAction={val => setNewAccountType(val)} />
                     </div>
                     <div className="mb-3">
                         <Label forEl="accountInstitution" className="form-label fw-bold" value="Account Institution:" />
@@ -194,7 +259,7 @@ function AccountsTab() {
                 <div>
                     <Button id="cancel" className="btn btn-outline-secondary" iconClassName="bi bi-x" closesModal={true} value="Cancel" />
                     &nbsp;
-                    <Button type="button" className="btn btn-outline-success" iconClassName="bi bi-plus" value="Create" isDisabled={saveButtonState.isDisabled} notLoading={saveButtonState.notLoading} />
+                    <Button type="button" className="btn btn-outline-success" iconClassName="bi bi-plus" value="Create" isDisabled={createButtonState.isDisabled} notLoading={createButtonState.notLoading} onClickAction={() => createAccount()} />
                 </div>
         
             } />
