@@ -207,7 +207,6 @@ function AccountsTab() {
             });
             
             // We increment the account length to trigger our effect method to rerender any new accounts.
-            setIsLoading(true);
             setAccountsLength(accountsLength + 1);
         }
         else if (response.isError) {
@@ -230,6 +229,19 @@ function AccountsTab() {
                 type: "error"
             });
         }
+    }
+
+    /**
+     * Clears the modal message state.
+     */
+    const clearModal = () => 
+    {
+        setModalMessageState({
+            message: "",
+            hidden: true,
+            iconClassName: "",
+            type: "info"
+        });        
     }
 
     /**
@@ -306,7 +318,7 @@ function AccountsTab() {
             }
             actions={
                 <div>
-                    <Button id="close" className="btn btn-outline-secondary" iconClassName="bi bi-x" closesModal={true} value="Close" />
+                    <Button id="close" className="btn btn-outline-secondary" iconClassName="bi bi-x" closesModal={true} value="Close" onClickAction={() => clearModal()} />
                     &nbsp;
                     <Button type="button" className="btn btn-outline-success" iconClassName="bi bi-plus" value="Create" isDisabled={createButtonState.isDisabled} notLoading={createButtonState.notLoading} onClickAction={() => createAccount()} />
                 </div>
