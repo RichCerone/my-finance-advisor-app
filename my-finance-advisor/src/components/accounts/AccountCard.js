@@ -11,13 +11,6 @@ import Message from "../common/Message";
  * @returns JSX component.
  */
 function AccountCard(props) {
-    // TODO: May need this for the create state of the card.
-    const options = new Map([
-        ["Savings","Savings"],
-        ["Checking", "Checking"],
-        ["Brokerage", "Brokerage"]
-    ]);
-
     const {
         /**
          * The header to display on the card (account name).
@@ -90,7 +83,7 @@ function AccountCard(props) {
     useEffect(() => {
         /**
          * After page load we need to re-update the account name and balance input values
-         * with the latest user input. Once the values are update the entire account state
+         * with the latest user input. Once the values are updated, the entire account state
          * is updated as well for when the user wants to save changes.
          */
         setAccountName(accountName);

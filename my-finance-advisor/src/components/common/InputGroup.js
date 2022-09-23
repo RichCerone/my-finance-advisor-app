@@ -53,13 +53,18 @@ function InputGroup(props) {
          * Validation to perform on key up on the input.
          */
         onKeyUpValidation = () => { return; },
+
+         /**
+         * Handles updating the value of the input element.
+         */
+        onChangeAction = (value) => { return value }
     } = props;
 
 
     return(
         <div className="input-group mb-3">
             <span className="input-group-text"><em id={iconId} className={iconClass} onClick={() => iconAction()}></em></span>
-            <input id={inputId} type={type} placeholder={placeholder} className={className} aria-label={inputId} aria-describedby={inputId} onBlur={() => onBlurValidation()} onKeyUp={() => onKeyUpValidation()} />
+            <input id={inputId} type={type} placeholder={placeholder} className={className} aria-label={inputId} aria-describedby={inputId} onBlur={() => onBlurValidation()} onKeyUp={() => onKeyUpValidation()} onChange={e => onChangeAction(e.target.value)} />
         </div>
     )
 }

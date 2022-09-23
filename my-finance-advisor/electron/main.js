@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const { GetToken, GetAccountsByUser, UpdateAccount } = require("./modules/api/ApiHandler");
+const { GetToken, GetAccountsByUser, UpdateAccount, CreateAccount } = require("./modules/api/ApiHandler");
 const { app, BrowserWindow, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');   
 const path = require('path');
@@ -10,8 +10,8 @@ let mainWindow;
  
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width:800,
-        height:600,
+        width:1024,
+        height:768,
         show: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
@@ -73,6 +73,15 @@ ipcMain.handle('api:getAccountsByUser', async function(_, arg) {
  */
 ipcMain.handle('api:updateAccount', async function(_, arg) {
   const result = await UpdateAccount(arg);
+
+  return result;
+});
+
+/**
+ * Creates the account.
+ */
+ipcMain.handle('api:createAccount', async function(_, arg) {
+  const result = await CreateAccount(arg);
 
   return result;
 });
